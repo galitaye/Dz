@@ -1,0 +1,20 @@
+#include <iostream>
+using namespace std;
+
+const string Input = "Enter x and y";
+const string Add = "x + y = ";
+const string Sub = "x - y = ";
+const string Mult = "x * y = ";
+const string Div = "x / y = ";
+
+int main() {
+    cout << Input << endl;
+    double x, y;
+    cin >> x >> y;
+    cout << Add << x + y << endl;
+    cout << Sub << x - y << endl;
+    cout << Mult << x * y << endl;
+    cout << Div << x / y << endl;
+    system("pause");
+    return 0;
+}
