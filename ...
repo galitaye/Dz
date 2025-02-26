@@ -1,0 +1,63 @@
+#include <iostream>
+#include <string>
+#include <random> // Для генерации случайных чисел
+
+// Windows-specific headers for color manipulation
+#ifdef _WIN32
+#include <windows.h>
+#endif
+
+using namespace std;
+
+// Function to set text color (Windows only)
+#ifdef _WIN32
+void setColor(int color) {
+  SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), color);
+}
+#else
+// For non-Windows systems, define a dummy setColor function
+void setColor(int color) {
+  // Color codes for non-Windows terminals (ANSI escape codes)
+  // (See previous example for details)
+}
+#endif
+
+// Function to generate a random number between min and max (inclusive)
+int getRandomNumber(int min, int max) {
+  static random_device rd; // Seed the generator with a non-deterministic source
+  static mt19937 gen(rd());  // Standard Mersenne Twister engine
+  uniform_int_distribution<> distrib(min, max); // Define the range
+  return distrib(gen);
+}
+
+int main() {
+  // Color codes (Windows)
+  const int RED = 12;    // Bright Red
+  const int GREEN = 10;  // Bright Green
+  const int YELLOW = 14; // Bright Yellow
+  const int BLUE = 9;    // Bright Blue
+  const int MAGENTA = 13; // Bright Magenta
+  const int CYAN = 11;   // Bright Cyan
+  const int WHITE = 15;  // White (default)
+
+  // Array of available colors
+  int colors[] = {RED, GREEN, YELLOW, BLUE, MAGENTA, CYAN};
+  int numColors = sizeof(colors) / sizeof(colors[0]); // Dynamically determine array size
+
+  string message;
+
+  cout << "Введите любое сообщение: ";
+  getline(cin, message); // Read the entire line, including spaces
+
+  // Output the message with random colors for each character
+  for (char c : message) {
+    int randomIndex = getRandomNumber(0, numColors - 1);
+    setColor(colors[randomIndex]);
+    cout << c;
+  }
+
+  setColor(WHITE); // Reset to default color
+  cout << endl;   // New line for better formatting
+
+  return 0;
+}
